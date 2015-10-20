@@ -9,12 +9,16 @@ class LoginController
     
     //private $LogInValidation;
     
-    public function __construct(LoginView $v, LoginModel $lm, RegisterView $rv, RegisterModel $rm)
+    public function __construct(LoginView $v, LoginModel $lm, RegisterView $rv,
+                                RegisterModel $rm, SchemeView $sv, BookView $bv, BookModel $bm)
     {
         $this->v = $v;
         $this->lm = $lm;
         $this->rv = $rv;
         $this->rm = $rm;
+        $this->sv = $sv;
+        $this->bv = $bv;
+        $this->bm = $bm;
     }
     
     public function init()
@@ -22,9 +26,14 @@ class LoginController
         try
         {
             
-            if($this->rv -> hasPressedRegister())
+            if($this-> rv -> hasPressedRegister())
             {
                 self::RegisterNewUser();
+            }
+            
+            if($this-> bv -> hasPressedBook()) /*Fixa ett medelande till bokningarna, genom en Model klass till book!*/
+            {
+                self::RegisterNewBook();
             }
             
             if($this-> v ->UserHasPressedLogin())
@@ -60,6 +69,16 @@ class LoginController
         $_SESSION["newUser"] = $registerUserName;
         
         header("Location: ?login");
+    }
+    
+    public function RegisterNewBook()
+    {
+        $bookRegisterUsername = $this -> bv -> getBookName();
+        $this-> bm -> BookRegister($bookRegisterUsername, $this-> bv -> getBookInformation()); 
+        
+        $_SESSION["newBook"] = $registerBook;
+        
+        header("Location: ?scheme");
     }
     
     public function logIn()
