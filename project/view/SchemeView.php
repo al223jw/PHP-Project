@@ -2,6 +2,7 @@
 
 class SchemeView
 {
+    private $days;
     public function generateScheme()
     {
         return'
@@ -9,24 +10,11 @@ class SchemeView
                     <fieldset>
                          <table width="600">
                             <tr>
-                                <th>Week</th>
-                                <th>Måndag</th>
-                                <th>Tisdag</th>
-                                <th>Onsdag</th>
-                                <th>Torsdag</th>
-                                <th>Fredag</th>
-                                <th>Lördag</th>
-                                <th>Söndag</th>
+                                ' . $this->getDay() . '
                             </tr>
                             <tr>
-                                <th>37</th>
-                                <th><a href=?book>Boka</a></th>
-                                <th><a href=?book>Boka</a></th>
-                                <th><a href=?book>Boka</a></th>
-                                <th><a href=?book>Boka</a></th>
-                                <th><a href=?book>Boka</a></th>
-                                <th><a href=?book>Boka</a></th>
-                                <th><a href=?book>Boka</a></th>
+                                <th>'. $this->getWeek() .'</th>
+                                ' . $this->dayArray() . '
                             </tr>
                           </table>
                     </fieldset>
@@ -34,12 +22,67 @@ class SchemeView
         ';
     }
     
-    public function getWeek()
+    private function getWeek()
     {
 		date_default_timezone_set('Europe/Stockholm');
 
-		$week = date("W");
-		$timeString = "$week[week]";
+		$timeString = date("W");
 		return '<p>' . $timeString . '</p>';
+    }
+    
+    public function getDayArray()
+    {
+        return array('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday','sunday');
+    }
+    
+    public function dayArray()
+    {
+        $dayArray = $this->getDayArray();
+        $dayToHtml = "";
+        
+        foreach($dayArray as $day) 
+        {
+            if($this->isAlreadyIsBooked($day))
+            {
+                $dayToHtml .= '<th><a href=?notification&day=' . $day . '>Notification</a></th>';
+            }
+            else
+            {
+                $dayToHtml .= '<th><a href=?day=' . $day . '>Book</a></th>';
+            }
+        }
+        return $dayToHtml;
+    }
+    
+    public function getCurrentDay()
+    {
+        return $_GET["day"];
+    }
+    
+    public function setDays($days)
+    {
+        $this->days = $days;
+    }
+    
+    private function getDay()
+    {
+        $arrayOfDays = array('Week','Måndag', 'Tisdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lördag','Söndag');
+        $ret = "";
+        
+        foreach($arrayOfDays as $svDay)
+        {
+            $ret .= '<th>'. $svDay .'</th>';
+        }
+        return $ret;
+    }
+    
+    private function isAlreadyIsBooked($day)
+    {
+        foreach ($this->days as $book)
+        {
+            if ($book->getBookDay() == $day)
+                return true;
+        }
+        return false;
     }
 }

@@ -2,7 +2,7 @@
 
 class UserDAL
 {
-    private static $path = "../data/database.bin";
+    private static $path = "../data/userdatabase.bin";
     private static $databaseFile;
     
     public function __construct()

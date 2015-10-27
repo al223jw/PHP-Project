@@ -4,38 +4,17 @@ class LoginController
 {
     private $v;
     private $lm;
-    private $rv;
-    private $rm;
     
-    //private $LogInValidation;
-    
-    public function __construct(LoginView $v, LoginModel $lm, RegisterView $rv,
-                                RegisterModel $rm, SchemeView $sv, BookView $bv, BookModel $bm)
+    public function __construct(LoginView $v, LoginModel $lm)
     {
         $this->v = $v;
         $this->lm = $lm;
-        $this->rv = $rv;
-        $this->rm = $rm;
-        $this->sv = $sv;
-        $this->bv = $bv;
-        $this->bm = $bm;
     }
     
-    public function init()
+    public function initLogin()
     {
         try
         {
-            
-            if($this-> rv -> hasPressedRegister())
-            {
-                self::RegisterNewUser();
-            }
-            
-            if($this-> bv -> hasPressedBook()) /*Fixa ett medelande till bokningarna, genom en Model klass till book!*/
-            {
-                self::RegisterNewBook();
-            }
-            
             if($this-> v ->UserHasPressedLogin())
             {
                 self::LogIn();
@@ -49,36 +28,10 @@ class LoginController
         {
             $this-> v -> setStatusMessage($e);
         }
-        
-        catch(RegisterModelException $e)
-        {
-            $this-> rv -> setErrorMessage($e);
-        }
         catch(Exception $e)
         {
-            echo "An unhandeld exception was thrown. Please infrom...";
+            echo "An unhandeld exception was thrown . Please infrom...";
         }
-        
-    }
-    
-    public function RegisterNewUser()
-    {
-        $registerUserName = $this-> rv -> getRequestUserName();
-        $this-> rm -> Register($registerUserName, $this -> rv -> getRequestPassword(), $this-> rv -> getRequestPasswordCheck());
-        
-        $_SESSION["newUser"] = $registerUserName;
-        
-        header("Location: ?login");
-    }
-    
-    public function RegisterNewBook()
-    {
-        $bookRegisterUsername = $this -> bv -> getBookName();
-        $this-> bm -> BookRegister($bookRegisterUsername, $this-> bv -> getBookInformation()); 
-        
-        $_SESSION["newBook"] = $registerBook;
-        
-        header("Location: ?scheme");
     }
     
     public function logIn()

@@ -1,5 +1,10 @@
 # PHP-Project
 
-Admin Login:
-Admin account that can registrate new members.
+
+
+TODO: Skriva ut notification en och en beroende på vilken dag man har laggt till en på.
+      Felmedelanden till book.
+      Lägga till en bookcontroller, registercontroller, mastercontroller. kanske fungerar.
+      Eventuell CSS.
+      
 

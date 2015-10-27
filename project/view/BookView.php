@@ -2,7 +2,7 @@
 
 class BookView
 {
-    private static $bookNameID = "BookView::Book";
+    private static $bookNameID = "BookView::BookName";
     private static $bookInfoID = "BookView::BookInfo";
     private static $bookID = "BookView::Book";
     
@@ -55,5 +55,14 @@ class BookView
             return trim($_POST[self::$bookID]);
         }
         return null; 
+    }
+    
+    public function setMessageError($e)
+    {
+        if(strpos($e -> getMessage(), "Error while registrating"))
+        {
+            self::$saveBookName = strip_tags(self::$saveBookName);
+        }
+        self::$bookNameID = $e -> getMessage();
     }
 }
