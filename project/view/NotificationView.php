@@ -1,5 +1,5 @@
 <?php
-//TODO FIx the notification so it works.
+
 class NotificationView
 {
     private $book;

@@ -5,10 +5,11 @@ class SchemeView
     private $days;
     public function generateScheme()
     {
+        // width="600"
         return'
                 <form method="post">
                     <fieldset>
-                         <table width="600">
+                         <table >
                             <tr>
                                 ' . $this->getDay() . '
                             </tr>
@@ -44,11 +45,11 @@ class SchemeView
         {
             if($this->isAlreadyIsBooked($day))
             {
-                $dayToHtml .= '<th><a href=?notification&day=' . $day . '>Notification</a></th>';
+                $dayToHtml .= '<th><a href="?notification&amp;day=' . $day . '">Notification</a></th>';
             }
             else
             {
-                $dayToHtml .= '<th><a href=?day=' . $day . '>Book</a></th>';
+                $dayToHtml .= '<th><a href="?&amp;day=' . $day . '">Book</a></th>';
             }
         }
         return $dayToHtml;
