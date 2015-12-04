@@ -9,7 +9,7 @@ class SchemeView
         return'
                 <form method="post">
                     <fieldset>
-                         <table >
+                         <table style="width: 600px">
                             <tr>
                                 ' . $this->getDay() . '
                             </tr>
@@ -45,11 +45,11 @@ class SchemeView
         {
             if($this->isAlreadyIsBooked($day))
             {
-                $dayToHtml .= '<th><a href="?notification&amp;day=' . $day . '">Notification</a></th>';
+                $dayToHtml .= '<th><a href="?notification&day=' . $day . '">Notification</a></th>';
             }
             else
             {
-                $dayToHtml .= '<th><a href="?&amp;day=' . $day . '">Book</a></th>';
+                $dayToHtml .= '<th><a href="?day=' . $day . '">Book</a></th>';
             }
         }
         return $dayToHtml;
